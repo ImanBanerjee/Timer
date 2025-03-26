@@ -1,3 +1,4 @@
+/* Modern Timer Styles */
 body {
     background-color: black;
     color: cyan;
@@ -8,15 +9,18 @@ body {
     justify-content: center;
     height: 100vh;
     margin: 0;
+    flex-direction: column;
 }
 
 .container {
     text-align: center;
+    animation: fadeIn 1s ease-in-out;
 }
 
 h1 {
-    font-size: 5rem;
+    font-size: 8rem;
     margin-bottom: 20px;
+    transition: transform 0.3s ease-in-out;
 }
 
 button {
@@ -24,12 +28,31 @@ button {
     margin: 5px;
     border: none;
     cursor: pointer;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     background: cyan;
     color: black;
-    border-radius: 5px;
+    border-radius: 10px;
+    transition: transform 0.2s ease-in-out;
 }
 
 button:hover {
     background: white;
+    transform: scale(1.1);
+}
+
+input {
+    padding: 10px;
+    font-size: 1.2rem;
+    margin: 5px;
+    width: 100px;
+    text-align: center;
+    border: 2px solid cyan;
+    background: black;
+    color: cyan;
+    border-radius: 5px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
