@@ -1,109 +1,89 @@
 let timer;
-let timeLeft = 600;
-let isRunning = false;
-let isCountingUp = false;
-let countUpTime = 0;
+let timeLeft = 0;
+let running = false;
 
-function updateDisplay() {
-    let minutes = Math.floor(timeLeft / 60);
-    let seconds = timeLeft % 60;
-    document.getElementById("timer").innerText = `${minutes}:${seconds.toString().padStart(2, '0')}`;
-}
+const timerDisplay = document.getElementById("timer");
+const hoursInput = document.getElementById("hours");
+const minutesInput = document.getElementById("minutes");
+const secondsInput = document.getElementById("seconds");
 
-function setTime() {
-    if (isCountingUp) return;
-
-    let minutes = parseInt(document.getElementById("minutes").value);
-    let seconds = parseInt(document.getElementById("seconds").value);
-
-    if (isNaN(minutes) || minutes < 0) minutes = 0;
-    if (isNaN(seconds) || seconds < 0 || seconds > 59) seconds = 0;
-
-    if (minutes === 0 && seconds === 0) {
-        alert("Please enter a valid time!");
-        return;
-    }
-
-    timeLeft = minutes * 60 + seconds;
-    updateDisplay();
-}
+document.getElementById("start").addEventListener("click", startTimer);
+document.getElementById("pause").addEventListener("click", pauseTimer);
+document.getElementById("reset").addEventListener("click", resetTimer);
+document.getElementById("hideUI").addEventListener("click", hideUI);
+document.getElementById("exitFullScreen").addEventListener("click", showUI);
 
 function startTimer() {
-    if (isRunning || isCountingUp) return;
-    
-    isRunning = true;
+    if (running) return;
+    timeLeft = (parseInt(hoursInput.value) || 0) * 3600 +
+               (parseInt(minutesInput.value) || 0) * 60 +
+               (parseInt(secondsInput.value) || 0);
+    if (timeLeft <= 0) return;
+    running = true;
     timer = setInterval(() => {
         if (timeLeft > 0) {
             timeLeft--;
-            updateDisplay();
+            updateDisplay(timeLeft);
         } else {
             clearInterval(timer);
-            isRunning = false;
-            startShakeEffect();
+            shakeScreen();
+            countUp();
         }
     }, 1000);
 }
 
 function pauseTimer() {
     clearInterval(timer);
-    isRunning = false;
+    running = false;
 }
 
 function resetTimer() {
-    clearInterval(timer);
-    isRunning = false;
-    isCountingUp = false;
-    countUpTime = 0;
-    timeLeft = 600;
-    updateDisplay();
+    if (confirm("💀 I GIVE UP? 😢")) {
+        timeLeft = 0;
+        updateDisplay(timeLeft);
+        running = false;
+        clearInterval(timer);
+    }
 }
 
-/* Shake Effect & Start Count-Up Mode */
-function startShakeEffect() {
-    let container = document.getElementById("mainContainer");
-    container.classList.add("shaking");
-
-    setTimeout(() => {
-        container.classList.remove("shaking");
-        startCountUp();
-    }, 3000); // Shake for 3 seconds
+function updateDisplay(time) {
+    let hrs = Math.floor(time / 3600).toString().padStart(2, '0');
+    let mins = Math.floor((time % 3600) / 60).toString().padStart(2, '0');
+    let secs = (time % 60).toString().padStart(2, '0');
+    timerDisplay.textContent = `${hrs}:${mins}:${secs}`;
 }
 
-/* Count-Up Timer */
-function startCountUp() {
-    isCountingUp = true;
+function hideUI() {
+    document.getElementById("container").classList.add("hidden");
+    document.getElementById("exitFullScreen").classList.remove("hidden");
+}
+
+function showUI() {
+    document.getElementById("container").classList.remove("hidden");
+    document.getElementById("exitFullScreen").classList.add("hidden");
+}
+
+function shakeScreen() {
+    let intensity = 10;
+    let duration = 2000;
+    let start = Date.now();
+    let interval = setInterval(() => {
+        let timePassed = Date.now() - start;
+        if (timePassed >= duration) {
+            clearInterval(interval);
+            document.body.style.transform = "translate(0, 0)";
+            return;
+        }
+        let x = (Math.random() * intensity * 2) - intensity;
+        let y = (Math.random() * intensity * 2) - intensity;
+        document.body.style.transform = `translate(${x}px, ${y}px)`;
+    }, 50);
+}
+
+function countUp() {
+    let count = 0;
     timer = setInterval(() => {
-        countUpTime++;
-        let minutes = Math.floor(countUpTime / 60);
-        let seconds = countUpTime % 60;
-        document.getElementById("timer").innerText = `+${minutes}:${seconds.toString().padStart(2, '0')}`;
+        count++;
+        updateDisplay(count);
     }, 1000);
 }
-
-/* Fullscreen Mode */
-function toggleFullscreen() {
-    if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen();
-    } else {
-        document.exitFullscreen();
-    }
-}
-
-/* Hide UI and Make Timer Big */
-function hideUI() {
-    if (timeLeft > 0 && isRunning) {
-        alert("You cannot hide UI while the timer is running!");
-        return;
-    }
-
-    document.getElementById("mainContainer").classList.add("full-view");
-    document.getElementById("exitFullView").style.display = "block";
-}
-
-/* Restore UI */
-function showUI() {
-    document.getElementById("mainContainer").classList.remove("full-view");
-    document.getElementById("exitFullView").style.display = "none";
-}
-
-updateDisplay();
