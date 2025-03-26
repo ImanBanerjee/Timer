@@ -1,64 +1,80 @@
-/* Modern Timer Styles */
+/* General Styles */
 body {
     background-color: black;
     color: cyan;
     font-family: Arial, sans-serif;
     text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
     margin: 0;
-    flex-direction: column;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.container {
-    text-align: center;
-    animation: fadeIn 1s ease-in-out;
-}
-
-h1 {
+/* Timer Display */
+#timer {
     font-size: 8rem;
+    font-weight: bold;
     margin-bottom: 20px;
-    transition: transform 0.3s ease-in-out;
+}
+
+/* Buttons and Inputs */
+button, input {
+    font-size: 1.2rem;
+    padding: 10px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
 }
 
 button {
-    padding: 12px 20px;
-    margin: 5px;
-    border: none;
-    cursor: pointer;
-    font-size: 1.5rem;
-    background: cyan;
+    background-color: cyan;
     color: black;
-    border-radius: 10px;
-    transition: transform 0.2s ease-in-out;
+    cursor: pointer;
 }
 
 button:hover {
-    background: white;
-    transform: scale(1.1);
+    background-color: darkcyan;
+    color: white;
 }
 
 input {
-    padding: 12px;
-    font-size: 1.5rem;
-    margin: 5px;
     width: 80px;
     text-align: center;
-    border: 2px solid cyan;
-    background: black;
-    color: cyan;
-    border-radius: 8px;
-    outline: none;
-    transition: border 0.3s ease-in-out;
 }
 
-input:focus {
-    border-color: white;
+/* Shake Animation */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 90% { transform: translateX(-10px); }
+    20%, 80% { transform: translateX(10px); }
+    30%, 70% { transform: translateX(-10px); }
+    40%, 60% { transform: translateX(10px); }
+    50% { transform: translateX(-10px); }
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+.shaking {
+    animation: shake 0.1s infinite;
+}
+
+/* Full View Mode */
+.full-view #controls {
+    display: none;
+}
+
+.full-view #timer {
+    font-size: 12rem;
+}
+
+#exitFullView {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1rem;
+    padding: 5px;
+    background: red;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
 }
