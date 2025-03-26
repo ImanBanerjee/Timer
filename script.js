@@ -1,39 +1,61 @@
-let time = 600;
+let timer;
+let timeLeft = 600;
 let isRunning = false;
-let timerInterval;
 
 function updateDisplay() {
-    let minutes = Math.floor(time / 60);
-    let seconds = time % 60;
-    document.getElementById("timer").textContent = 
-        `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+    let minutes = Math.floor(timeLeft / 60);
+    let seconds = timeLeft % 60;
+    document.getElementById("timer").innerText = `${minutes}:${seconds.toString().padStart(2, '0')}`;
 }
 
-function startTimer() {
-    if (!isRunning) {
-        isRunning = true;
-        timerInterval = setInterval(() => {
-            if (time > 0) {
-                time--;
-                updateDisplay();
-            } else {
-                clearInterval(timerInterval);
-            }
-        }, 1000);
-    }
-}
-
-function pauseTimer() {
-    isRunning = false;
-    clearInterval(timerInterval);
-}
-
-function resetTimer() {
-    isRunning = false;
-    clearInterval(timerInterval);
-    time = 600;
+function setTime() {
+    let minutes = parseInt(document.getElementById("minutes").value) || 0;
+    let seconds = parseInt(document.getElementById("seconds").value) || 0;
+    timeLeft = minutes * 60 + seconds;
     updateDisplay();
 }
 
-// Initialize timer display
+function startTimer() {
+    if (isRunning) return;
+    isRunning = true;
+    timer = setInterval(() => {
+        if (timeLeft > 0) {
+            timeLeft--;
+            updateDisplay();
+        } else {
+            clearInterval(timer);
+            isRunning = false;
+            if (document.getElementById("loop").checked) {
+                setTime();
+                startTimer();
+            }
+        }
+    }, 1000);
+}
+
+function pauseTimer() {
+    clearInterval(timer);
+    isRunning = false;
+}
+
+function resetTimer() {
+    clearInterval(timer);
+    isRunning = false;
+    timeLeft = 600;
+    updateDisplay();
+}
+
+function setPreset(minutes) {
+    timeLeft = minutes * 60;
+    updateDisplay();
+}
+
+function toggleFullscreen() {
+    if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+    } else {
+        document.exitFullscreen();
+    }
+}
+
 updateDisplay();
