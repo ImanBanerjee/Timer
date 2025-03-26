@@ -9,8 +9,17 @@ function updateDisplay() {
 }
 
 function setTime() {
-    let minutes = parseInt(document.getElementById("minutes").value) || 0;
-    let seconds = parseInt(document.getElementById("seconds").value) || 0;
+    let minutes = parseInt(document.getElementById("minutes").value);
+    let seconds = parseInt(document.getElementById("seconds").value);
+
+    if (isNaN(minutes) || minutes < 0) minutes = 0;
+    if (isNaN(seconds) || seconds < 0 || seconds > 59) seconds = 0;
+
+    if (minutes === 0 && seconds === 0) {
+        alert("Please enter a valid time!");
+        return;
+    }
+
     timeLeft = minutes * 60 + seconds;
     updateDisplay();
 }
@@ -42,11 +51,6 @@ function resetTimer() {
     clearInterval(timer);
     isRunning = false;
     timeLeft = 600;
-    updateDisplay();
-}
-
-function setPreset(minutes) {
-    timeLeft = minutes * 60;
     updateDisplay();
 }
 
