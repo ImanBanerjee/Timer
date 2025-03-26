@@ -10,11 +10,23 @@
 <body>
     <div class="container">
         <h1 id="timer">10:00</h1>
+        <div class="controls">
+            <input type="number" id="minutes" placeholder="Minutes" min="0">
+            <input type="number" id="seconds" placeholder="Seconds" min="0" max="59">
+            <button onclick="setTime()">Set Time</button>
+        </div>
         <div class="buttons">
             <button onclick="startTimer()">Start</button>
             <button onclick="pauseTimer()">Pause</button>
             <button onclick="resetTimer()">Reset</button>
+            <button onclick="toggleFullscreen()">Fullscreen</button>
         </div>
+        <div class="presets">
+            <button onclick="setPreset(5)">5 Min Break</button>
+            <button onclick="setPreset(25)">25 Min Study</button>
+            <button onclick="setPreset(45)">45 Min Deep Work</button>
+        </div>
+        <label><input type="checkbox" id="loop"> Loop Timer</label>
     </div>
 </body>
 </html>
