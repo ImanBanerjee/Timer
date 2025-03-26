@@ -1,80 +1,43 @@
-/* General Styles */
 body {
     background-color: black;
     color: cyan;
     font-family: Arial, sans-serif;
     text-align: center;
     margin: 0;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    padding: 0;
 }
-
-/* Timer Display */
+#container {
+    margin-top: 20vh;
+}
 #timer {
-    font-size: 8rem;
+    font-size: 5rem;
     font-weight: bold;
-    margin-bottom: 20px;
 }
-
-/* Buttons and Inputs */
-button, input {
-    font-size: 1.2rem;
-    padding: 10px;
-    margin: 5px;
-    border: none;
-    border-radius: 5px;
-}
-
-button {
-    background-color: cyan;
-    color: black;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: darkcyan;
-    color: white;
-}
-
 input {
-    width: 80px;
+    width: 50px;
+    padding: 5px;
+    margin: 5px;
+    font-size: 1.5rem;
     text-align: center;
 }
-
-/* Shake Animation */
-@keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    10%, 90% { transform: translateX(-10px); }
-    20%, 80% { transform: translateX(10px); }
-    30%, 70% { transform: translateX(-10px); }
-    40%, 60% { transform: translateX(10px); }
-    50% { transform: translateX(-10px); }
+button {
+    background: cyan;
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    font-size: 1.2rem;
+    cursor: pointer;
 }
-
-.shaking {
-    animation: shake 0.1s infinite;
-}
-
-/* Full View Mode */
-.full-view #controls {
+.hidden {
     display: none;
 }
-
-.full-view #timer {
-    font-size: 12rem;
-}
-
-#exitFullView {
-    display: none;
-    position: absolute;
+#exitFullScreen {
+    position: fixed;
     top: 10px;
     right: 10px;
-    font-size: 1rem;
-    padding: 5px;
     background: red;
     color: white;
-    border-radius: 5px;
+    padding: 5px 10px;
     cursor: pointer;
+    font-weight: bold;
 }
