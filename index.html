@@ -5,23 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modern Timer</title>
     <link rel="stylesheet" href="styles.css">
-    <script defer src="script.js"></script>
 </head>
 <body>
-    <div class="container">
+    <div id="mainContainer">
         <h1 id="timer">10:00</h1>
-        <div class="controls">
+        <div id="controls">
             <input type="number" id="minutes" placeholder="Min" min="0">
             <input type="number" id="seconds" placeholder="Sec" min="0" max="59">
             <button onclick="setTime()">Set Time</button>
-        </div>
-        <div class="buttons">
             <button onclick="startTimer()">Start</button>
             <button onclick="pauseTimer()">Pause</button>
             <button onclick="resetTimer()">Reset</button>
             <button onclick="toggleFullscreen()">Fullscreen</button>
+            <button onclick="hideUI()">Hide UI</button>
         </div>
-        <label><input type="checkbox" id="loop"> Loop Timer</label>
     </div>
+    <button id="exitFullView" onclick="showUI()">Exit Full View</button>
+    <script src="script.js"></script>
 </body>
 </html>
