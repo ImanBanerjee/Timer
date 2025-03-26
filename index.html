@@ -7,20 +7,17 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="mainContainer">
-        <h1 id="timer">10:00</h1>
-        <div id="controls">
-            <input type="number" id="minutes" placeholder="Min" min="0">
-            <input type="number" id="seconds" placeholder="Sec" min="0" max="59">
-            <button onclick="setTime()">Set Time</button>
-            <button onclick="startTimer()">Start</button>
-            <button onclick="pauseTimer()">Pause</button>
-            <button onclick="resetTimer()">Reset</button>
-            <button onclick="toggleFullscreen()">Fullscreen</button>
-            <button onclick="hideUI()">Hide UI</button>
-        </div>
+    <div id="container">
+        <div id="timer">00:00:00</div>
+        <input type="number" id="hours" placeholder="H">
+        <input type="number" id="minutes" placeholder="M">
+        <input type="number" id="seconds" placeholder="S">
+        <button id="start">Start</button>
+        <button id="pause">Pause</button>
+        <button id="reset">Reset</button>
+        <button id="hideUI">Hide UI</button>
     </div>
-    <button id="exitFullView" onclick="showUI()">Exit</button>
+    <div id="exitFullScreen" class="hidden">X</div>
     <script src="script.js"></script>
 </body>
 </html>
